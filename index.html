@@ -1,0 +1,2164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="3-Track Master Execution Cockpit for Charles Oluwatuase: FUTA FYP, UoPeople CS, and Sim-to-Real Master's Positioning">
+<link rel="manifest" href="manifest.json">
+<title>3-Track Master Execution Cockpit | FUTA • UoPeople • Sim-to-Real</title>
+<style>
+  :root {
+    --bg-primary: #090d16;
+    --bg-secondary: #0f172a;
+    --bg-tertiary: #1e293b;
+    --card-bg: rgba(30, 41, 59, 0.7);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(255, 255, 255, 0.18);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    
+    --futa-accent: #f59e0b;
+    --futa-bg: rgba(245, 158, 11, 0.12);
+    --futa-border: rgba(245, 158, 11, 0.3);
+    
+    --uop-accent: #0ea5e9;
+    --uop-bg: rgba(14, 165, 233, 0.12);
+    --uop-border: rgba(14, 165, 233, 0.3);
+    
+    --career-accent: #a855f7;
+    --career-bg: rgba(168, 85, 247, 0.12);
+    --career-border: rgba(168, 85, 247, 0.3);
+
+    --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.12);
+    --warning: #f59e0b;
+    --danger: #ef4444;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  [data-theme="light"] {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #e2e8f0;
+    --border-hover: #cbd5e1;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    
+    --futa-accent: #d97706;
+    --futa-bg: #fef3c7;
+    --futa-border: #fde68a;
+    
+    --uop-accent: #0284c7;
+    --uop-bg: #e0f2fe;
+    --uop-border: #bae6fd;
+    
+    --career-accent: #7c3aed;
+    --career-bg: #f3e8ff;
+    --career-border: #e9d5ff;
+
+    --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding-bottom: 80px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* Top Navigation Bar */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-color: rgba(15, 23, 42, 0.88);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  [data-theme="light"] .top-nav {
+    background-color: rgba(255, 255, 255, 0.92);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-brand-badge {
+    background: linear-gradient(135deg, #a855f7, #3b82f6);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .nav-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    transition: all 0.15s ease;
+  }
+  .btn:hover {
+    background: var(--border-hover);
+    border-color: var(--border-hover);
+  }
+  .btn-primary {
+    background: #2563eb;
+    border-color: #1d4ed8;
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: #1d4ed8;
+  }
+  .btn-sync {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border: none;
+    color: #fff;
+  }
+
+  /* Main Container */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 16px;
+  }
+
+  /* Hero Section */
+  .hero-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  [data-theme="light"] .hero-card {
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--futa-accent), var(--uop-accent), var(--career-accent));
+  }
+
+  .hero-title-group h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+  }
+  .hero-title-group p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    max-width: 820px;
+  }
+  .candidate-pill {
+    display: inline-block;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+  .candidate-pill strong {
+    color: var(--text-primary);
+  }
+
+  /* Progress Masterboard */
+  .progress-masterboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .metric-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    position: relative;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+  }
+  .metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .metric-title {
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .metric-percent {
+    font-size: 19px;
+    font-weight: 800;
+  }
+  .metric-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    height: 7px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Strategic Rule Callout */
+  .strategic-callout {
+    background: rgba(37, 99, 235, 0.08);
+    border-left: 4px solid #2563eb;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .callout-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .callout-text strong {
+    color: var(--text-primary);
+  }
+
+  /* Tab Navigation */
+  .tabs-wrapper {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+  }
+  .tab-btn.active {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  .tab-badge {
+    background: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10.5px;
+  }
+
+  /* Filter Controls */
+  .filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .track-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .filter-chip {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    transition: all 0.15s ease;
+  }
+  .filter-chip:hover {
+    color: var(--text-primary);
+  }
+  .filter-chip.active {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+  }
+  .filter-chip.futa.active {
+    background: var(--futa-bg);
+    color: var(--futa-accent);
+    border-color: var(--futa-accent);
+  }
+  .filter-chip.uop.active {
+    background: var(--uop-bg);
+    color: var(--uop-accent);
+    border-color: var(--uop-accent);
+  }
+  .filter-chip.career.active {
+    background: var(--career-bg);
+    color: var(--career-accent);
+    border-color: var(--career-accent);
+  }
+
+  /* Schedule Month Sections */
+  .month-section {
+    margin-bottom: 24px;
+  }
+  .month-header-row {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .month-title {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .month-weeks-badge {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* Schedule Week Cards */
+  .week-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .week-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .week-card:hover {
+    border-color: var(--border-hover);
+  }
+  .week-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .week-number {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .deep-dive-btn {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--bg-tertiary);
+    color: #60a5fa;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .deep-dive-btn:hover {
+    background: rgba(96, 165, 250, 0.15);
+  }
+
+  .tracks-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 950px) {
+    .tracks-columns {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .track-col {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    border: 1px solid transparent;
+  }
+  .track-col.futa { border-left: 3px solid var(--futa-accent); }
+  .track-col.uop { border-left: 3px solid var(--uop-accent); }
+  .track-col.career { border-left: 3px solid var(--career-accent); }
+
+  .track-col-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .track-col-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .track-col-timing {
+    font-size: 9.5px;
+    color: var(--text-muted);
+  }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .task-item.completed span {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1.5px solid var(--text-muted);
+    background: transparent;
+    cursor: pointer;
+    margin-top: 2px;
+    flex-shrink: 0;
+    display: inline-grid;
+    place-content: center;
+    transition: all 0.15s ease;
+  }
+  .custom-checkbox:checked {
+    background: var(--success);
+    border-color: var(--success);
+  }
+  .custom-checkbox:checked::before {
+    content: "✓";
+    font-size: 11px;
+    font-weight: 900;
+    color: #fff;
+  }
+
+  /* Faculty Directory Tab Content */
+  .faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .faculty-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-card);
+  }
+  .faculty-uni {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #3b82f6;
+  }
+  .faculty-lab {
+    font-size: 15px;
+    font-weight: 800;
+    margin-top: 2px;
+  }
+  .faculty-personnel {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    margin: 8px 0;
+    line-height: 1.5;
+  }
+  .faculty-domain {
+    font-size: 11.5px;
+    background: var(--bg-tertiary);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+  .faculty-hook {
+    font-size: 11px;
+    color: var(--text-primary);
+    border-left: 2.5px solid #a855f7;
+    margin-bottom: 12px;
+    background: var(--career-bg);
+    padding: 6px 8px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Email Generator Studio */
+  .email-studio {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-top: 20px;
+  }
+  .studio-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .form-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .form-input, .form-select {
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 12.5px;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus {
+    border-color: #2563eb;
+  }
+  .email-output-box {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--career-accent);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    max-height: 420px;
+    overflow-y: auto;
+  }
+
+  /* BOM Table */
+  .bom-table-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+  }
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    min-width: 600px;
+  }
+  .custom-table th {
+    background: var(--bg-tertiary);
+    padding: 9px 12px;
+    color: var(--text-secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 10.5px;
+  }
+  .custom-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+  }
+  .status-select {
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  /* Cadence Matrix */
+  .cadence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .cadence-day-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+  }
+  .cadence-day-name {
+    font-size: 12.5px;
+    font-weight: 800;
+    margin-bottom: 2px;
+  }
+  .cadence-track-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .cadence-list {
+    list-style: none;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .cadence-list li {
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 12px;
+  }
+  .cadence-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+  }
+
+  /* Field Manuals Reader */
+  .manuals-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 800px) {
+    .manuals-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  .manuals-sidebar {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .manual-nav-btn {
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .manual-nav-btn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+  .manual-nav-btn.active {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+  .manual-viewer {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-height: 700px;
+    overflow-y: auto;
+  }
+  .manual-viewer h2 {
+    color: var(--text-primary);
+    font-size: 17px;
+    margin: 16px 0 8px 0;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 4px;
+  }
+  .manual-viewer h3 {
+    color: var(--text-primary);
+    font-size: 14px;
+    margin: 12px 0 6px 0;
+  }
+  .manual-viewer ul, .manual-viewer ol {
+    margin: 6px 0 12px 20px;
+  }
+  .manual-viewer pre {
+    background: var(--bg-primary);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-family: monospace;
+    font-size: 11px;
+    margin: 8px 0 12px 0;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+  }
+
+  /* Modals */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 640px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 22px 24px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+  }
+  .modal-title {
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .modal-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #10b981;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.25s ease;
+    z-index: 9999;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Mobile Bottom Navigation Bar */
+  .mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    z-index: 200;
+    padding: 6px 10px;
+    justify-content: space-around;
+  }
+  @media (max-width: 768px) {
+    .mobile-bottom-nav { display: flex; }
+    .tabs-wrapper { display: none; }
+  }
+  .mob-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  .mob-nav-item.active { color: #3b82f6; }
+</style>
+</head>
+<body data-theme="dark">
+
+  <!-- Sticky Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <span class="nav-brand-badge">Mission Control</span>
+      <span class="nav-title">3-Track Master Execution Cockpit</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-sync" onclick="openSyncModal()">🔄 Sync / Mobile</button>
+      <button class="btn" onclick="toggleTheme()" id="themeBtn">🌓 Theme</button>
+      <button class="btn btn-primary" onclick="window.print()">🖨️ PDF</button>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Hero Header -->
+    <header class="hero-card">
+      <div class="hero-content">
+        <div class="hero-title-group">
+          <h1>Unified 3-Track Master Execution Schedule</h1>
+          <p>
+            Strategic positioning cockpit for Charles Oluwatuase: Simultaneous execution of FUTA Mechatronics FYP, University of the People CS Degree, and cutting-edge Isaac Lab / OpenUSD Sim-to-Real research for master's recruitment at ETH Zurich, TU Delft & NTNU.
+          </p>
+          <div class="candidate-pill">
+            Candidate: <strong>Charles Oluwatuase</strong> • B.Eng Mechatronics (FUTA) & B.S. Computer Science (UoPeople) • Target Intake: 2025/2026
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Master Metrics -->
+      <div class="progress-masterboard">
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title" style="color:#60a5fa;">Overall Progress</span>
+            <span class="metric-percent" id="totalPercent">0%</span>
+          </div>
+          <div class="metric-sub" id="totalCount">0 of 72 tasks completed</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="totalBar" style="width:0%; background:linear-gradient(90deg, #3b82f6, #a855f7);"></div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title" style="color:var(--futa-accent);">Track 1: FUTA Drone</span>
+            <span class="metric-percent" id="futaPercent">0%</span>
+          </div>
+          <div class="metric-sub" id="futaCount">0 of 24 Saturday tasks</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="futaBar" style="width:0%; background:var(--futa-accent);"></div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title" style="color:var(--uop-accent);">Track 2: UoPeople CS</span>
+            <span class="metric-percent" id="uopPercent">0%</span>
+          </div>
+          <div class="metric-sub" id="uopCount">0 of 24 Mon-Thu milestones</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="uopBar" style="width:0%; background:var(--uop-accent);"></div>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-title" style="color:var(--career-accent);">Track 3: Sim-to-Real</span>
+            <span class="metric-percent" id="careerPercent">0%</span>
+          </div>
+          <div class="metric-sub" id="careerCount">0 of 24 Fri/Sun milestones</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="careerBar" style="width:0%; background:var(--career-accent);"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Strategic Rule Callout -->
+    <div class="strategic-callout">
+      <div class="callout-text">
+        🔒 <strong>Non-Negotiable Track Boundaries:</strong> 
+        The FUTA Drone is strictly for undergraduate Mechatronics graduation (Saturdays only). UoPeople CS is strictly for core degree completion (Mon-Thu). The OpenUSD / Isaac Lab Sim-to-Real pipeline is your flagship research artifact for master's admissions (Fri/Sun).
+      </div>
+      <div style="font-size:11px; font-weight:700; color:#3b82f6;">
+        TARGET LABS: ETH Zurich (RSL & ASL) • TU Delft (CoR) • NTNU Cybernetics
+      </div>
+    </div>
+
+    <!-- Desktop Tabs -->
+    <div class="tabs-wrapper">
+      <button class="tab-btn active" onclick="switchTab('tab-schedule')">📅 24-Week Tactical Tracker</button>
+      <button class="tab-btn" onclick="switchTab('tab-cadence')">⏱️ Daily Time-Block Matrix</button>
+      <button class="tab-btn" onclick="switchTab('tab-faculty')">🏛️ Faculty Directory & Outreach Studio</button>
+      <button class="tab-btn" onclick="switchTab('tab-bom')">🛠️ FUTA Ultra-Budget Drone BOM</button>
+      <button class="tab-btn" onclick="switchTab('tab-manuals')">📖 Technical Field Manuals</button>
+    </div>
+
+    <!-- TAB 1: 24-WEEK TACTICAL TRACKER -->
+    <div id="tab-schedule" class="tab-content">
+      <div class="filter-bar">
+        <div class="track-filters">
+          <button class="filter-chip active" onclick="filterTrack('all', this)">All 3 Tracks</button>
+          <button class="filter-chip futa" onclick="filterTrack('futa', this)">🚁 Track 1: FUTA Drone (Sat)</button>
+          <button class="filter-chip uop" onclick="filterTrack('uop', this)">💻 Track 2: UoPeople CS (Mon-Thu)</button>
+          <button class="filter-chip career" onclick="filterTrack('career', this)">🤖 Track 3: Sim-to-Real (Fri/Sun)</button>
+        </div>
+        <div style="font-size:11.5px; color:var(--text-muted);">
+          Tap <strong>🔍 Deep Dive</strong> on any week for exact scripts, commands & pitfalls.
+        </div>
+      </div>
+
+      <div id="weeksContainer"></div>
+    </div>
+
+    <!-- TAB 2: DAILY TIME-BLOCK MATRIX -->
+    <div id="tab-cadence" class="tab-content" style="display:none;">
+      <div class="hero-card" style="margin-bottom:16px; padding:16px 20px;">
+        <h2 style="font-size:17px; margin-bottom:4px;">Cognitive Time-Blocking: Zero Context Switching</h2>
+        <p style="font-size:12.5px; color:var(--text-secondary);">
+          Eliminate mental fatigue by dedicating discrete days to discrete tracks.
+        </p>
+      </div>
+
+      <div class="cadence-grid">
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Monday</div>
+          <span class="cadence-track-tag" style="background:var(--uop-bg); color:var(--uop-accent);">Track 2: UoPeople</span>
+          <ul class="cadence-list">
+            <li>Grade peer assessments (Unit defense)</li>
+            <li>Inspect feedback on learning journal</li>
+            <li>Begin new unit readings</li>
+          </ul>
+        </div>
+
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Tuesday</div>
+          <span class="cadence-track-tag" style="background:var(--uop-bg); color:var(--uop-accent);">Track 2: UoPeople</span>
+          <ul class="cadence-list">
+            <li>Deep study of CS textbook modules</li>
+            <li>Author Discussion Forum initial post with 2 APA citations</li>
+          </ul>
+        </div>
+
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Wednesday</div>
+          <span class="cadence-track-tag" style="background:var(--uop-bg); color:var(--uop-accent);">Track 2: UoPeople</span>
+          <ul class="cadence-list">
+            <li>Post 3 substantive peer replies in forum</li>
+            <li>Implement programming assignment code</li>
+          </ul>
+        </div>
+
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Thursday</div>
+          <span class="cadence-track-tag" style="background:var(--uop-bg); color:var(--uop-accent);">Track 2: UoPeople</span>
+          <ul class="cadence-list">
+            <li>Submit Programming Assignment & Learning Journal</li>
+            <li>Take weekly unit self-quiz</li>
+          </ul>
+        </div>
+
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Friday</div>
+          <span class="cadence-track-tag" style="background:var(--career-bg); color:var(--career-accent);">Track 3: Deep Sim</span>
+          <ul class="cadence-list">
+            <li><strong>Intense 4-Hour Code Sprint:</strong></li>
+            <li>OpenUSD scene authoring & trimesh inertia calculations</li>
+            <li>Isaac Lab headless environment scripting</li>
+            <li>PPO reinforcement learning training runs</li>
+          </ul>
+        </div>
+
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Saturday</div>
+          <span class="cadence-track-tag" style="background:var(--futa-bg); color:var(--futa-accent);">Track 1: FUTA Drone</span>
+          <ul class="cadence-list">
+            <li><strong>Hardware Workshop Day:</strong></li>
+            <li>CAD modeling in Fusion 360</li>
+            <li>Physical soldering, wiring & multimeter checks</li>
+            <li>Pixhawk calibration & outdoor flight tests</li>
+            <li>Thesis chapter drafting (1 chapter every 4 weeks)</li>
+          </ul>
+        </div>
+
+        <div class="cadence-day-card">
+          <div class="cadence-day-name">Sunday</div>
+          <span class="cadence-track-tag" style="background:var(--career-bg); color:var(--career-accent);">Track 3: Certs & Outreach</span>
+          <ul class="cadence-list">
+            <li>Google Project Management certificate module</li>
+            <li>Autodesk Generative Design / FEA exam study</li>
+            <li>Publish bi-weekly technical LinkedIn insight post</li>
+            <li>Read 1 recent paper from ETHZ/TUDelft/NTNU</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: FACULTY DIRECTORY & OUTREACH STUDIO -->
+    <div id="tab-faculty" class="tab-content" style="display:none;">
+      <div class="faculty-grid">
+        <div class="faculty-card">
+          <div class="faculty-uni">ETH Zurich • Switzerland</div>
+          <div class="faculty-lab">Robotic Systems Lab (RSL)</div>
+          <div class="faculty-personnel">
+            • <strong>Prof. Marco Hutter</strong> (Head, RSL)<br>
+            • <em>Dr. Cesar Cadena</em> (Senior Scientist)<br>
+            • <em>Vaishakh Patil</em> (Postdoc / Locomotion Lead)<br>
+            • <em>Mayank Mittal / Fan Yang</em> (Isaac Sim Leads)
+          </div>
+          <div class="faculty-domain">Dynamic legged locomotion (ANYmal), blind locomotion over rough terrain, RL manipulation.</div>
+          <div class="faculty-hook">Target repo: <code>leggedrobotics/rsl_rl</code>. Benchmark programmatic USD inertia ingestion on dynamic articulated joints under high damping perturbation.</div>
+          <button class="btn btn-primary" onclick="loadEmailDraft('rsl')">✍️ Generate RSL Draft</button>
+        </div>
+
+        <div class="faculty-card">
+          <div class="faculty-uni">ETH Zurich • Switzerland</div>
+          <div class="faculty-lab">Autonomous Systems Lab (ASL)</div>
+          <div class="faculty-personnel">
+            • <strong>Prof. Roland Siegwart</strong> (Head, ASL)<br>
+            • <em>Dr. Hendrik Kolvenbach</em> (Postdoc, Space/Extreme)<br>
+            • <em>Dr. Andrei Cramariuc</em> (Postdoc, Perception)
+          </div>
+          <div class="faculty-domain">Autonomous aerial & ground inspection, planetary rovers, state estimation & visual odometry.</div>
+          <div class="faculty-hook">Headless LiDAR/RGB-D camera raycasting via Isaac Lab CUDA tensors; feed simulated sensor streams to estimation suites.</div>
+          <button class="btn btn-primary" onclick="loadEmailDraft('asl')">✍️ Generate ASL Draft</button>
+        </div>
+
+        <div class="faculty-card">
+          <div class="faculty-uni">TU Delft • Netherlands</div>
+          <div class="faculty-lab">Cognitive Robotics (CoR)</div>
+          <div class="faculty-personnel">
+            • <strong>Prof. Robert Babuska</strong> (Chair)<br>
+            • <strong>Prof. Jens Kober</strong> (Head, RL for Control)<br>
+            • <em>Dr. Laura Ferranti</em> (Optimal Control)<br>
+            • <em>Giovanni Franzese</em> (Interactive Imitation)
+          </div>
+          <div class="faculty-domain">Reinforcement learning for control, compliant robotics, dynamic manipulation, tactile learning.</div>
+          <div class="faculty-hook">Apply V-HACD convex decomposition to eliminate physics interpenetration in Isaac Lab; domain randomization over joint stiffness and friction.</div>
+          <button class="btn btn-primary" onclick="loadEmailDraft('cor')">✍️ Generate CoR Draft</button>
+        </div>
+
+        <div class="faculty-card">
+          <div class="faculty-uni">NTNU • Norway</div>
+          <div class="faculty-lab">Dept. of Engineering Cybernetics</div>
+          <div class="faculty-personnel">
+            • <strong>Prof. Kristin Y. Pettersen</strong> (Snake Robotics)<br>
+            • <strong>Prof. Jan Tommy Gravdahl</strong> (Modeling)<br>
+            • <strong>Prof. Kostas Alexis</strong> (Autonomous Robots)
+          </div>
+          <div class="faculty-domain">Mathematical physics modeling, marine cybernetics, nonlinear robotic control, subterranean robotics.</div>
+          <div class="faculty-hook">Mathematical verification of programmatic 3x3 inertia tensors (I); simulate subterranean perception tasks using headless Isaac Lab environments.</div>
+          <button class="btn btn-primary" onclick="loadEmailDraft('ntnu')">✍️ Generate NTNU Draft</button>
+        </div>
+      </div>
+
+      <!-- Outreach Email Studio -->
+      <div class="email-studio" id="emailStudioSection">
+        <h3 style="font-size:15px; margin-bottom:10px;">Dynamic Academic Outreach Generator</h3>
+        <div class="studio-form-grid">
+          <div class="form-group">
+            <label class="form-label">Outreach Stage</label>
+            <select class="form-select" id="emailStage" onchange="updateEmailDraft()">
+              <option value="stage1">Stage 1 (Week 16): Postdoc / Senior PhD Technical Question</option>
+              <option value="stage2">Stage 2 (Week 20): Lead Professor (PI) Sponsorship Pitch</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Target Laboratory</label>
+            <select class="form-select" id="emailTargetLab" onchange="updateEmailDraft()">
+              <option value="rsl">ETH Zurich — Robotic Systems Lab (Hutter / Patil)</option>
+              <option value="asl">ETH Zurich — Autonomous Systems Lab (Siegwart / Cramariuc)</option>
+              <option value="cor">TU Delft — Cognitive Robotics (Kober / Franzese)</option>
+              <option value="ntnu">NTNU — Engineering Cybernetics (Pettersen / Alexis)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">GitHub Repository URL</label>
+            <input type="text" class="form-input" id="emailRepoUrl" value="https://github.com/charles-oluwatuase/cad2usd-isaaclab" oninput="updateEmailDraft()">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Demo Video URL (45-sec)</label>
+            <input type="text" class="form-input" id="emailVideoUrl" value="https://youtu.be/demo-sim2real-pipeline" oninput="updateEmailDraft()">
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; color:var(--career-accent);">Generated Preview:</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-primary" onclick="copyEmailText()">📋 Copy Text</button>
+            <button class="btn" onclick="openMailClient()">✉️ Open Client</button>
+          </div>
+        </div>
+        <div class="email-output-box" id="emailOutputBox"></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: FUTA ULTRA-BUDGET DRONE BOM -->
+    <div id="tab-bom" class="tab-content" style="display:none;">
+      <div class="hero-card" style="margin-bottom:16px; padding:16px 20px;">
+        <h2 style="font-size:17px; margin-bottom:4px;">Track 1: FUTA Drone Bill of Materials & Procurement Tracker</h2>
+        <p style="font-size:12.5px; color:var(--text-secondary);">Strict budget cap: ~$147 – $185 USD total.</p>
+      </div>
+      <div class="bom-table-container">
+        <table class="custom-table" id="bomTable">
+          <thead>
+            <tr>
+              <th style="width:16%;">Subsystem</th>
+              <th style="width:34%;">Component</th>
+              <th style="width:20%;">Purpose</th>
+              <th style="width:15%;">Est. Cost</th>
+              <th style="width:15%;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="bomTbody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" style="text-align:right; font-weight:700; padding:10px;">Estimated Total Budget:</td>
+              <td style="font-weight:800; color:var(--success); font-size:13px; padding:10px;">$147 – $185 USD</td>
+              <td style="padding:10px;" id="bomSourcedCount">0 of 6 Sourced</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5: TECHNICAL FIELD MANUALS -->
+    <div id="tab-manuals" class="tab-content" style="display:none;">
+      <div class="manuals-container">
+        <div class="manuals-sidebar">
+          <button class="manual-nav-btn active" onclick="showManual('m-track1', this)">🛠️ Track 1 Drone Manual</button>
+          <button class="manual-nav-btn" onclick="showManual('m-track2', this)">💻 Track 2 UoPeople Survival</button>
+          <button class="manual-nav-btn" onclick="showManual('m-track3', this)">🤖 Track 3 Sim-to-Real Pipeline</button>
+          <button class="manual-nav-btn" onclick="showManual('m-faculty', this)">🎯 Faculty Outreach Strategy</button>
+        </div>
+
+        <div class="manual-viewer" id="manualViewerContent">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <div class="mobile-bottom-nav">
+    <button class="mob-nav-item active" onclick="switchTabMobile('tab-schedule', this)">
+      <span>📅</span><span>Tracker</span>
+    </button>
+    <button class="mob-nav-item" onclick="switchTabMobile('tab-cadence', this)">
+      <span>⏱️</span><span>Matrix</span>
+    </button>
+    <button class="mob-nav-item" onclick="switchTabMobile('tab-faculty', this)">
+      <span>🏛️</span><span>Outreach</span>
+    </button>
+    <button class="mob-nav-item" onclick="switchTabMobile('tab-bom', this)">
+      <span>🛠️</span><span>BOM</span>
+    </button>
+    <button class="mob-nav-item" onclick="switchTabMobile('tab-manuals', this)">
+      <span>📖</span><span>Manuals</span>
+    </button>
+  </div>
+
+  <!-- Deep Dive Modal -->
+  <div class="modal-backdrop" id="deepDiveModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="deepDiveTitle">Week Details</div>
+        <button class="modal-close" onclick="closeDeepDiveModal()">✕</button>
+      </div>
+      <div id="deepDiveBody" style="font-size:13px; line-height:1.6; color:var(--text-secondary);"></div>
+    </div>
+  </div>
+
+  <!-- Sync / Mobile Modal -->
+  <div class="modal-backdrop" id="syncModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">🔄 Mobile & Laptop Cloud Sync</div>
+        <button class="modal-close" onclick="closeSyncModal()">✕</button>
+      </div>
+      <div style="font-size:13px; line-height:1.6; color:var(--text-secondary);">
+        <p style="margin-bottom:12px;">Keep your progress 100% synchronized across your mobile phone and laptop.</p>
+        
+        <h4 style="color:var(--text-primary); margin:12px 0 6px 0;">Method 1: Instant Quick-Sync Code (No Setup)</h4>
+        <p style="font-size:12px; margin-bottom:8px;">Generate a compact sync code on one device and apply it on the other:</p>
+        <button class="btn btn-primary" onclick="generateSyncCode()">Generate Sync Code</button>
+        <textarea id="syncCodeBox" style="width:100%; height:70px; margin-top:8px; padding:8px; font-family:monospace; font-size:11px; background:var(--bg-primary); color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px;" placeholder="Click 'Generate Sync Code' or paste a code from your other device here..."></textarea>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button class="btn" onclick="copySyncCode()">📋 Copy Code</button>
+          <button class="btn btn-primary" onclick="applySyncCode()">✅ Apply Sync Code</button>
+        </div>
+
+        <hr style="border:none; border-top:1px solid var(--border-color); margin:18px 0;">
+
+        <h4 style="color:var(--text-primary); margin:12px 0 6px 0;">Method 2: Backup Files</h4>
+        <div style="display:flex; gap:8px;">
+          <button class="btn" onclick="exportData()">💾 Download JSON Backup</button>
+          <label class="btn" style="margin:0;">
+            📥 Restore JSON
+            <input type="file" id="importFileInput" onchange="importData(event)" style="display:none;">
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard!</div>
+
+  <script>
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW registration skipped', err));
+      });
+    }
+
+    // Schedule & Deep Dive Data for All 24 Weeks
+    const SCHEDULE_DATA = [
+      {
+        month: 1,
+        title: "MONTH 1: FOUNDATIONS (USD PXRS, FUTA CAD SKELETON, UOPEOPLE TERM START)",
+        weeksBadge: "WEEKS 1 – 4",
+        weeks: [
+          {
+            week: 1,
+            futa: "Model baseline F450 drone frame in Fusion 360; obtain supervisor sign-off on BOM.",
+            uop: "Mon: Unit 1 peer assessments. Tue-Wed: CS readings. Thu: Discussion forum & Python tasks.",
+            career: "Fri: Master Pixar pxr LIVPS rules, layer stacks locally. Sun: Complete Google PM Course 1.",
+            details: {
+              focus: "Stage & CAD Architecture",
+              futaDoD: "Fusion 360 assembly model (.f3d) complete with arms, top plate, bottom PDB plate. Supervisor signature on single-page BOM.",
+              careerDoD: "Install pxr via USD Python wheels. Author a basic .usda stage implementing Sublayers and References. Complete Google PM Course 1 quiz.",
+              gotchas: "Don't over-detail screws in CAD—keep mesh lightweight. In USD, never edit payloads directly on root layer; use sublayers.",
+              commands: "pip install usd-core trimesh\npython -c 'from pxr import Usd; stage = Usd.Stage.CreateNew(\"test.usda\"); stage.Save()'"
+            }
+          },
+          {
+            week: 2,
+            futa: "Source F450 frame kit and A2212 motors; draft thesis Chapter 1 (Introduction & Scope).",
+            uop: "Mon: Unit 2 peer reviews. Tue: Learning journal. Wed-Thu: CS programming assignment.",
+            career: "Fri: Script dynamic USD overrides via Usd.Stage.OverridePrim(). Sun: Finish Google PM Course 2.",
+            details: {
+              focus: "USD Overrides & Thesis Chapter 1",
+              futaDoD: "F450 frame kit and A2212 brushless motors received/ordered. 4-page draft of Thesis Chapter 1.",
+              careerDoD: "Python script using Usd.Stage.OverridePrim() to non-destructively alter transform matrices.",
+              gotchas: "Check A2212 motor shaft diameter (usually 3.17mm) to ensure propeller adapters match. Ensure UoPeople learning journal reaches 300 words.",
+              commands: "git init\npython -c 'from pxr import Usd, Sdf; stage = Usd.Stage.Open(\"test.usda\"); prim = stage.OverridePrim(Sdf.Path(\"/Asset\"))'"
+            }
+          },
+          {
+            week: 3,
+            futa: "Bench-check motor mounts, landing legs, and battery bay dimensions on physical parts.",
+            uop: "Mon-Thu: Data structures / systems programming modules; unit quizzes and forum defense.",
+            career: "Fri: Script LIVPS payload references to switch colliders. Sun: Complete Google PM Course 3.",
+            details: {
+              focus: "Physical Sizing & USD Payloads",
+              futaDoD: "Test fit 3S LiPo battery in frame bay. Verify motor mounting hole pitch (16mm x 19mm).",
+              careerDoD: "Script USD payload unload/load to toggle between high-poly visual meshes and simple convex collision geometry.",
+              gotchas: "Always unload heavy payloads before batch processing in Isaac Sim.",
+              commands: "python -c 'from pxr import Usd; stage = Usd.Stage.Open(\"scene.usda\"); prim = stage.GetPrimAtPath(\"/Robot\"); prim.Unload()'"
+            }
+          },
+          {
+            week: 4,
+            futa: "Assemble physical F450 frame arms and landing gear; draft thesis Chapter 2 (Literature Review).",
+            uop: "Midterm assessment for UoPeople CS courses; submit required portfolio deliverables.",
+            career: "Fri: Programmatic USD API schema authoring. Sun: Publish LinkedIn Post 1 (USD Arcs).",
+            details: {
+              focus: "Mechanical Assembly & Public Positioning",
+              futaDoD: "Physical F450 frame assembled. Chapter 2 Literature Review drafted (drone dynamics, EKF review).",
+              careerDoD: "LinkedIn Post 1 published detailing USD composition arcs with clean diagrams and code snippet.",
+              gotchas: "Do not overtighten arm screws into plastic threads—use medium torque to avoid stripping.",
+              commands: "# Publish LinkedIn Post 1 (USD Composition Arcs in Robotics Simulation)"
+            }
+          }
+        ]
+      },
+      {
+        month: 2,
+        title: "MONTH 2: CAD PARSING ENGINE, DRONE PDB SOLDERING, GENERATIVE DESIGN CERT",
+        weeksBadge: "WEEKS 5 – 8",
+        weeks: [
+          {
+            week: 5,
+            futa: "Solder Power Distribution Board (PDB) on F450 frame; solder XT60 battery connector.",
+            uop: "Mon-Thu: Software engineering unit; object-oriented design patterns & weekly journal.",
+            career: "Fri: Build CLI tool cad2usd with trimesh. Sun: Study Autodesk Generative Design syllabus.",
+            details: {
+              focus: "PDB Soldering & CAD Parsing CLI",
+              futaDoD: "XT60 and 4 ESC power leads soldered to bottom plate. Zero solder bridges verified with multimeter buzzer.",
+              careerDoD: "cad2usd CLI tool taking an .stl/.obj mesh and writing a .usda file with UsdGeomMesh.",
+              gotchas: "Use a 60W+ soldering iron for XT60 battery leads; thick copper ground planes suck heat rapidly.",
+              commands: "pip install click trimesh\npython cad2usd.py --input parts/arm.stl --output parts/arm.usda"
+            }
+          },
+          {
+            week: 6,
+            futa: "Mount 4x 30A SimonK ESCs onto frame arms; verify wiring polarity with multimeter.",
+            uop: "Mon-Thu: Database management systems, SQL query optimization assignments.",
+            career: "Fri: Implement programmatic 3x3 inertia tensor matrix (I) generation. Sun: Google PM Course 4.",
+            details: {
+              focus: "3x3 Inertia Tensor Matrix Authoring",
+              futaDoD: "ESCs secured to arms with zip ties. Correct +/- polarity double-checked.",
+              careerDoD: "trimesh integration calculating accurate 3x3 inertia tensor and authoring UsdPhysics.MassAPI attributes.",
+              gotchas: "Ensure density matches material (PLA: ~1240 kg/m3, Aluminum: ~2700 kg/m3).",
+              commands: "python -c 'import trimesh; m = trimesh.load(\"mesh.stl\"); print(m.moment_inertia)'"
+            }
+          },
+          {
+            week: 7,
+            futa: "Mount A2212 motors; verify clockwise/counter-clockwise mounting positions.",
+            uop: "Mon-Thu: Unit 7 assignments; review algorithmic efficiency and Big-O trade-offs.",
+            career: "Fri: Integrate automated V-HACD convex decomposition in Python. Sun: Google PM Course 5.",
+            details: {
+              focus: "V-HACD Convex Decomposition",
+              futaDoD: "4 A2212 motors mounted to arms with lock washers.",
+              careerDoD: "pyvhacd integrated into cad2usd CLI generating up to 16 collision hulls.",
+              gotchas: "Never pass raw non-convex concave meshes to PhysX; it triggers solver divergence.",
+              commands: "pip install pyvhacd\npython cad2usd.py --input complex_body.stl --vhacd"
+            }
+          },
+          {
+            week: 8,
+            futa: "Flash PX4/ArduPilot firmware to Pixhawk clone via Mission Planner USB interface.",
+            uop: "End-of-term study and submission of final assignments for UoPeople CS term.",
+            career: "Fri: Unit-test mass properties against CAD models. Sun: Publish LinkedIn Post 2 (V-HACD).",
+            details: {
+              focus: "Firmware Flashing & Milestone Validation",
+              futaDoD: "Pixhawk 2.4.8 flashed with ArduCopter Quad-X. USB connection verified in Mission Planner.",
+              careerDoD: "Unit tests validating inertia values against CAD mass properties. LinkedIn Post 2 published.",
+              gotchas: "If Pixhawk is not recognized on Windows, install STM32 Virtual COM Port drivers.",
+              commands: "pytest tests/test_inertia.py"
+            }
+          }
+        ]
+      },
+      {
+        month: 3,
+        title: "MONTH 3: HEADLESS ISAAC LAB, PIXHAWK CALIBRATION, FEA SIMULATION CERT",
+        weeksBadge: "WEEKS 9 – 12",
+        weeks: [
+          {
+            week: 9,
+            futa: "Calibrate Pixhawk onboard IMU sensors (accelerometer, compass 6-point orientation).",
+            uop: "Sit UoPeople final examinations for the term; complete course evaluations.",
+            career: "Fri: Launch headless Isaac Lab on free Azure/GCP GPU. Sun: Sit Autodesk Generative Design Exam.",
+            details: {
+              focus: "Sensor Calibration & Headless Cloud Isaac Lab",
+              futaDoD: "Pixhawk 6-axis accelerometer calibration and compass calibration completed successfully.",
+              careerDoD: "Launch Isaac Lab docker container on Azure GPU instance in --headless mode. Pass Generative Design exam.",
+              gotchas: "Calibrate compass outdoors or in an open courtyard away from reinforced concrete steel bars.",
+              commands: "docker run --gpus all -it --rm nvcr.io/nvidia/isaac-sim:4.2.0 ./isaac-sim.sh --headless"
+            }
+          },
+          {
+            week: 10,
+            futa: "Conduct ESC throttle range calibration; bind FlySky FS-i6 transmitter to receiver.",
+            uop: "Term break: Maintain GitHub repository profiles and review upcoming term modules.",
+            career: "Fri: Configure PhysX solver iterations & target frame rates in Isaac Lab. Sun: Prep FEA static stress exam.",
+            details: {
+              focus: "Radio Binding & PhysX Solver Tuning",
+              futaDoD: "Transmitter bound to receiver. All 4 ESCs respond synchronously to throttle stick.",
+              careerDoD: "Tune PhysX solver in Isaac Lab: solver_type=1 (TGS), 8 position iterations, 1 velocity iteration.",
+              gotchas: "ALWAYS REMOVE PROPELLERS during ESC calibration. Accidental spin-up can cause severe injury.",
+              commands: "python scripts/tune_physx.py --sim_rate 200 --control_rate 50"
+            }
+          },
+          {
+            week: 11,
+            futa: "Spin-test motors without props; verify rotational direction per PX4 motor map.",
+            uop: "Start New UoPeople Term: Register courses (Operating Systems/Networks); Unit 1 tasks.",
+            career: "Fri: Script multi-robot spawner running 128 dynamic joints in Isaac Lab. Sun: Sit Autodesk Stress FEA Exam.",
+            details: {
+              focus: "Motor Direction Check & Multi-Robot Simulation",
+              futaDoD: "Motors 1 & 2 spin CCW; Motors 3 & 4 spin CW. Swap any two ESC wires to reverse direction.",
+              careerDoD: "Spawn 128 dynamic robot joints in headless Isaac Lab achieving > 60 FPS. Pass Autodesk Stress FEA Exam.",
+              gotchas: "Mark motor rotation arrows directly on arm tape for zero ambiguity.",
+              commands: "python scripts/multi_robot_spawn.py --num_robots 128"
+            }
+          },
+          {
+            week: 12,
+            futa: "Install vibration-damped mount for Pixhawk; securely strap 3S LiPo battery to frame.",
+            uop: "Mon-Thu: Unit 2 operating systems tasks; thread management and process sync.",
+            career: "Fri: Programmatically attach Raycaster (LiDAR) and RGB-D sensors. Sun: Publish LinkedIn Post 3 (Headless).",
+            details: {
+              focus: "Vibration Isolation & Sensor Raycasting",
+              futaDoD: "Pixhawk mounted on 3M foam/silicone damping balls. Battery strapped with velcro + buckle.",
+              careerDoD: "Attach CUDA raycaster sensor in Isaac Lab tensor pipeline. Publish LinkedIn Post 3.",
+              gotchas: "High frame vibration (>30m/s2) causes Pixhawk EKF altitude runaway.",
+              commands: "# Publish LinkedIn Post 3 (Scaling Headless Sensor Simulation in Isaac Lab)"
+            }
+          }
+        ]
+      },
+      {
+        month: 4,
+        title: "MONTH 4: DOMAIN RANDOMIZATION, TETHERED FLIGHT, SENIOR PHD & POSTDOC CONTACT",
+        weeksBadge: "WEEKS 13 – 16",
+        weeks: [
+          {
+            week: 13,
+            futa: "Attach 1045 propellers; perform first low-altitude tethered hover test in manual mode.",
+            uop: "Mon-Thu: Network architecture and distributed systems assignments; learning journal.",
+            career: "Fri: Build ManagerBasedRLEnv with Observation & Action Managers. Sun: Complete Google PM Capstone.",
+            details: {
+              focus: "First Tethered Hover & RL Environment Setup",
+              futaDoD: "Drone lifts off 0.5m under loose tether in field. Stable response in STABILIZE mode.",
+              careerDoD: "ManagerBasedRLEnv implemented with ObservationManager, ActionManager, and RewardManager. Google PM Capstone done.",
+              gotchas: "Use fishing line or rope tether with at least 1.5m slack so it doesn't destabilize attitude.",
+              commands: "python scripts/rsl_rl/train.py --task=CustomQuadEnv --headless"
+            }
+          },
+          {
+            week: 14,
+            futa: "Tune basic PID roll and pitch gains; verify GPS lock and compass heading outdoors.",
+            uop: "Mon-Thu: Unit 4 midterm CS assignments; complete weekly programming lab.",
+            career: "Fri: Script dynamic EventManager domain randomization triggers (friction, mass). Sun: Audit Hutter/Kober papers.",
+            details: {
+              focus: "PID Tuning & Domain Randomization",
+              futaDoD: "Roll/Pitch rate PIDs adjusted in Mission Planner. 3D GPS fix (12+ satellites) verified.",
+              careerDoD: "EventManager modulating rigid body mass (+/-15%), friction (0.3 to 1.2), and external velocity pushes.",
+              gotchas: "If drone oscillates rapidly, lower rate P gain by 15%.",
+              commands: "python scripts/test_domain_randomization.py --visualize"
+            }
+          },
+          {
+            week: 15,
+            futa: "Conduct stable outdoor loiter and altitude-hold flight tests; record flight telemetry data.",
+            uop: "Mon-Thu: Systems security, encryption, and socket programming assignments.",
+            career: "Fri: Run parallel PPO training across 4,096 envs via RSL-RL/SKRL. Sun: Submit issue/PR to target lab open repos.",
+            details: {
+              focus: "Autonomous Loiter & 4096-Env PPO Training",
+              futaDoD: "Drone maintains position in LOITER mode with hands off sticks. Telemetry log downloaded.",
+              careerDoD: "PPO training converges across 4,096 environments. Logged on Weights & Biases with reward plot.",
+              gotchas: "Check motor temperatures immediately after landing (should be warm, not hot to touch).",
+              commands: "wandb login\npython scripts/rsl_rl/train.py --task=CustomQuadEnv --num_envs=4096 --logger=wandb"
+            }
+          },
+          {
+            week: 16,
+            futa: "Draft FUTA thesis Chapter 3 (Methodology & Flight Controller Implementation).",
+            uop: "Mon-Thu: Peer reviews and learning journal entry on virtual memory management.",
+            career: "CONTACT PHASE 1 (Fri-Sun): Send technical inquiries to Vaishakh Patil / Mayank Mittal (ETHZ) & Giovanni Franzese (TU Delft) sharing Isaac Lab WandB curves.",
+            details: {
+              focus: "CONTACT PHASE 1: Postdoc Outreach",
+              futaDoD: "Chapter 3 Methodology drafted with block diagrams and wiring schematics.",
+              careerDoD: "Emails sent to Dr. Patil / Mayank Mittal (ETHZ) and Giovanni Franzese (TU Delft) referencing solver contact dynamics.",
+              gotchas: "Send emails Tuesday/Wednesday at 09:30 CET. Never ask for scholarships in Stage 1—ask technical questions only.",
+              commands: "# Dispatch Stage 1 Postdoc Inquiries with WandB links"
+            }
+          }
+        ]
+      },
+      {
+        month: 5,
+        title: "MONTH 5: SIM-TO-REAL ONNX DEPLOYMENT, AUTONOMOUS DRONE FLIGHT, LEAD PI OUTREACH",
+        weeksBadge: "WEEKS 17 – 20",
+        weeks: [
+          {
+            week: 17,
+            futa: "Plan and execute autonomous GPS waypoint mission via QGroundControl / Mission Planner.",
+            uop: "Mon-Thu: Advanced software engineering methodologies; software architecture patterns.",
+            career: "Fri: Export trained RL policy checkpoint to .onnx. Sun: Bench-test inference latency on edge board.",
+            details: {
+              focus: "Autonomous Waypoint Flight & ONNX Export",
+              futaDoD: "Drone flies 4-point GPS mission autonomously and returns home.",
+              careerDoD: "Actor network exported to .onnx with opset_version=14. Latency measured under 1.5ms with ONNX Runtime.",
+              gotchas: "Set safe waypoint altitude (minimum 15 meters) above trees and obstacles.",
+              commands: "python scripts/export_onnx.py --checkpoint model.pt --output policy.onnx"
+            }
+          },
+          {
+            week: 18,
+            futa: "Test fail-safe modes (Return-to-Launch on signal loss, low-voltage auto-landing).",
+            uop: "Mon-Thu: Prepare final term projects and programming deliverables for UoPeople courses.",
+            career: "Fri: Hardware evaluation on test rig. Sun: Optional SolidWorks CSWA/CSWP preparation.",
+            details: {
+              focus: "Failsafe Verification & Edge Evaluation",
+              futaDoD: "Switch off transmitter during outdoor hover -> Drone executes RTL and lands safely within 2m of launch.",
+              careerDoD: "ONNX inference running on Raspberry Pi or laptop CPU with consistent loop frequency.",
+              gotchas: "Test failsafe with transmitter in hand, ready to switch back to Stabilize if needed.",
+              commands: "python scripts/benchmark_onnx_edge.py --iterations 1000"
+            }
+          },
+          {
+            week: 19,
+            futa: "Draft FUTA thesis Chapter 4 (Field Testing, Sensor Logs & Performance Results).",
+            uop: "Review all modules; sit end-of-term examinations for Computer Science degree courses.",
+            career: "Fri: Assemble clean master GitHub repo for OpenUSD/Isaac Lab pipeline. Sun: Record 45s demonstration video.",
+            details: {
+              focus: "45-Second Demo Video & Thesis Chapter 4",
+              futaDoD: "Chapter 4 drafted with graphs of altitude hold, GPS track, and vibration analysis.",
+              careerDoD: "45-second high-impact demonstration video recorded, edited, and uploaded as unlisted YouTube. GitHub README polished.",
+              gotchas: "Keep video strictly under 45 seconds. Highlight CAD ingestion, 4096-env training, and ONNX deployment.",
+              commands: "# Assemble Master GitHub Repo & Record 45s Demo Video"
+            }
+          },
+          {
+            week: 20,
+            futa: "Draft thesis Chapter 5 (Conclusion & Recommendations); submit full draft to supervisor.",
+            uop: "Ensure all CS degree graduation requirements and credits are documented on student portal.",
+            career: "CONTACT PHASE 2 (Fri-Sun): Send formal PI outreach emails with video & repo links to Prof. Marco Hutter, Prof. Jens Kober, and Prof. Kostas Alexis.",
+            details: {
+              focus: "CONTACT PHASE 2: Lead PI Outreach",
+              futaDoD: "Full 5-chapter thesis submitted to supervisor for review and corrections.",
+              careerDoD: "Formal pitch emails sent to Prof. Marco Hutter, Prof. Jens Kober, and Prof. Kostas Alexis with 45s demo video link.",
+              gotchas: "Send between 08:30 and 09:15 CET on Tuesday. Keep email under 170 words.",
+              commands: "# Dispatch Stage 2 PI Pitch Emails with Unlisted Demo Link"
+            }
+          }
+        ]
+      },
+      {
+        month: 6,
+        title: "MONTH 6: FUTA DEFENSE, UOPEOPLE GRADUATION CLEARANCE, FORMAL MSC ADMISSIONS",
+        weeksBadge: "WEEKS 21 – 24",
+        weeks: [
+          {
+            week: 21,
+            futa: "Format FUTA thesis per departmental guidelines; print and bind draft copies.",
+            uop: "Request official academic transcripts and degree completion statement from UoPeople.",
+            career: "Follow up on GitHub technical inquiries; attend scheduled virtual meetings with postdocs.",
+            details: {
+              focus: "Thesis Binding & Academic Follow-ups",
+              futaDoD: "Thesis bound in required format. Final flight checks performed.",
+              careerDoD: "Follow up with researchers if no response after 7 business days using the value-add template.",
+              gotchas: "Check page margins and university title page formatting rules.",
+              commands: "# Send 7-Day Value-Add Follow-Up Thread"
+            }
+          },
+          {
+            week: 22,
+            futa: "DEFENSE DAY: Deliver presentation and physical drone flight demo for external examiners.",
+            uop: "Complete administrative graduation audit for B.S. in Computer Science.",
+            career: "Receive feedback/interviews from PIs; secure confirmation of lab interest or research sponsorship.",
+            details: {
+              focus: "DEFENSE DAY & Virtual Lab Interviews",
+              futaDoD: "A-grade defense delivered with flawless outdoor flight demo.",
+              careerDoD: "Attend 10-15 minute virtual discussions with target robotics labs.",
+              gotchas: "Have spare props and fully charged batteries ready on defense morning.",
+              commands: "# Defend FUTA B.Eng FYP & Attend European Lab Screening Calls"
+            }
+          },
+          {
+            week: 23,
+            futa: "Make post-defense corrections to thesis; obtain departmental and faculty sign-offs.",
+            uop: "Receive official UoPeople completion verification; archive all degree documentation.",
+            career: "Assemble portfolio packet: Dual Degrees + Google PM + Autodesk Badges + OpenUSD repo.",
+            details: {
+              focus: "Portfolio Consolidation & Final Clearances",
+              futaDoD: "Post-defense corrections signed off by Head of Department and Dean.",
+              careerDoD: "Consolidated PDF portfolio assembled containing dual degree transcripts, certificates, and GitHub link.",
+              gotchas: "Scan and keep high-resolution copies of all signed clearance sheets.",
+              commands: "# Consolidate Academic Portfolio PDF"
+            }
+          },
+          {
+            week: 24,
+            futa: "Final FUTA clearance; archive raw flight telemetry logs and GrabCAD CAD models.",
+            uop: "All academic requirements completed for dual undergraduate qualifications.",
+            career: "Submit formal master's applications with lab recommendation/sponsorship letters attached.",
+            details: {
+              focus: "Formal MSc Submission with Lab Endorsement",
+              futaDoD: "Final undergraduate clearance completed.",
+              careerDoD: "Formal MSc applications submitted to ETH Zurich, TU Delft, and NTNU with lab correspondence attached.",
+              gotchas: "Submit before portal application deadlines (ETHZ Dec 15 / TU Delft Jan 15).",
+              commands: "# Submit Formal Master's Applications with Lab Endorsements"
+            }
+          }
+        ]
+      }
+    ];
+
+    // BOM Components Data
+    const BOM_DATA = [
+      { id: "bom-frame", subsystem: "Frame", component: "F450 Quadcopter Frame Kit with integrated PCB Power Distribution", purpose: "Chassis structure & integrated power rail", estCost: "$12 – $16" },
+      { id: "bom-propulsion", subsystem: "Propulsion", component: "4x A2212 1000KV/1400KV Brushless Motors + 4x 30A SimonK ESCs", purpose: "Lift generation & electronic speed control", estCost: "$28 – $34" },
+      { id: "bom-propellers", subsystem: "Propellers", component: "2 pairs 1045 Nylon Propellers (CW and CCW)", purpose: "Aerodynamic lift surface", estCost: "$4 – $6" },
+      { id: "bom-fc", subsystem: "Flight Controller", component: "Pixhawk 2.4.8 (Clone) 32-bit Cortex-M4 with GPS & Compass Mast", purpose: "Autonomous flight stabilization, EKF state estimation", estCost: "$45 – $55" },
+      { id: "bom-power", subsystem: "Power & Battery", component: "3S 2200mAh LiPo Battery (25C) + Compact B3 Pro Balance Charger", purpose: "11.1V electrical power bus & safe charging", estCost: "$20 – $26" },
+      { id: "bom-rc", subsystem: "RC Controller", component: "FlySky FS-i6 6-Channel Transmitter + FS-iA6B Receiver", purpose: "2.4GHz manual safety override control", estCost: "$38 – $48" }
+    ];
+
+    // Storage Key
+    const STORAGE_KEY = "charles_master_schedule_state_v2";
+
+    let state = {
+      tasks: {},
+      bomStatus: {},
+      theme: "dark"
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("charles_master_schedule_state_v1");
+        if (saved) state = JSON.parse(saved);
+      } catch (e) {
+        console.error("Failed to load state", e);
+      }
+      if (!state.tasks) state.tasks = {};
+      if (!state.bomStatus) state.bomStatus = {};
+      if (state.theme) document.body.setAttribute("data-theme", state.theme);
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.error("Failed to save state", e);
+      }
+    }
+
+    function toggleTask(taskId) {
+      state.tasks[taskId] = !state.tasks[taskId];
+      saveState();
+      updateMetrics();
+      
+      const itemEl = document.getElementById("item-" + taskId);
+      if (itemEl) {
+        if (state.tasks[taskId]) itemEl.classList.add("completed");
+        else itemEl.classList.remove("completed");
+      }
+    }
+
+    function setBomStatus(bomId, value) {
+      state.bomStatus[bomId] = value;
+      saveState();
+      updateBomMetrics();
+    }
+
+    function updateMetrics() {
+      let futaDone = 0, uopDone = 0, careerDone = 0;
+      for (let w = 1; w <= 24; w++) {
+        if (state.tasks[`task-futa-w${w}`]) futaDone++;
+        if (state.tasks[`task-uop-w${w}`]) uopDone++;
+        if (state.tasks[`task-career-w${w}`]) careerDone++;
+      }
+      const totalDone = futaDone + uopDone + careerDone;
+      const totalTasks = 24 * 3;
+
+      const totalP = Math.round((totalDone / totalTasks) * 100);
+      const futaP = Math.round((futaDone / 24) * 100);
+      const uopP = Math.round((uopDone / 24) * 100);
+      const careerP = Math.round((careerDone / 24) * 100);
+
+      document.getElementById("totalPercent").innerText = totalP + "%";
+      document.getElementById("totalCount").innerText = `${totalDone} of ${totalTasks} tasks completed`;
+      document.getElementById("totalBar").style.width = totalP + "%";
+
+      document.getElementById("futaPercent").innerText = futaP + "%";
+      document.getElementById("futaCount").innerText = `${futaDone} of 24 Saturday tasks`;
+      document.getElementById("futaBar").style.width = futaP + "%";
+
+      document.getElementById("uopPercent").innerText = uopP + "%";
+      document.getElementById("uopCount").innerText = `${uopDone} of 24 Mon-Thu milestones`;
+      document.getElementById("uopBar").style.width = uopP + "%";
+
+      document.getElementById("careerPercent").innerText = careerP + "%";
+      document.getElementById("careerCount").innerText = `${careerDone} of 24 Fri/Sun milestones`;
+      document.getElementById("careerBar").style.width = careerP + "%";
+    }
+
+    function updateBomMetrics() {
+      let sourced = 0;
+      BOM_DATA.forEach(item => {
+        const s = state.bomStatus[item.id];
+        if (s === "ordered" || s === "tested" || s === "ready") sourced++;
+      });
+      const el = document.getElementById("bomSourcedCount");
+      if (el) el.innerText = `${sourced} of ${BOM_DATA.length} Sourced/Active`;
+    }
+
+    function renderSchedule() {
+      const container = document.getElementById("weeksContainer");
+      container.innerHTML = "";
+
+      SCHEDULE_DATA.forEach(monthObj => {
+        const monthSec = document.createElement("div");
+        monthSec.className = "month-section";
+
+        const headerRow = document.createElement("div");
+        headerRow.className = "month-header-row";
+        headerRow.innerHTML = `
+          <div class="month-title">${monthObj.title}</div>
+          <div class="month-weeks-badge">${monthObj.weeksBadge}</div>
+        `;
+        monthSec.appendChild(headerRow);
+
+        const weekGrid = document.createElement("div");
+        weekGrid.className = "week-grid";
+
+        monthObj.weeks.forEach(w => {
+          const futaId = `task-futa-w${w.week}`;
+          const uopId = `task-uop-w${w.week}`;
+          const careerId = `task-career-w${w.week}`;
+
+          const futaChecked = state.tasks[futaId] ? "checked" : "";
+          const uopChecked = state.tasks[uopId] ? "checked" : "";
+          const careerChecked = state.tasks[careerId] ? "checked" : "";
+
+          const card = document.createElement("div");
+          card.className = "week-card";
+          card.id = `weekCard-${w.week}`;
+
+          card.innerHTML = `
+            <div class="week-card-top">
+              <div class="week-number">
+                <span>WEEK ${w.week}</span>
+                <button class="deep-dive-btn" onclick="openDeepDiveModal(${w.week})">🔍 Deep Dive</button>
+              </div>
+              <div style="font-size:11px; color:var(--text-muted);">Month ${monthObj.month}</div>
+            </div>
+            <div class="tracks-columns">
+              <div class="track-col futa" data-track="futa">
+                <div class="track-col-header">
+                  <span class="track-col-label" style="color:var(--futa-accent);">Track 1: FUTA Drone</span>
+                  <span class="track-col-timing">Saturday</span>
+                </div>
+                <div class="task-item ${futaChecked ? 'completed' : ''}" id="item-${futaId}">
+                  <input type="checkbox" class="custom-checkbox" id="${futaId}" ${futaChecked} onchange="toggleTask('${futaId}')">
+                  <span>${w.futa}</span>
+                </div>
+              </div>
+
+              <div class="track-col uop" data-track="uop">
+                <div class="track-col-header">
+                  <span class="track-col-label" style="color:var(--uop-accent);">Track 2: UoPeople CS</span>
+                  <span class="track-col-timing">Mon – Thu</span>
+                </div>
+                <div class="task-item ${uopChecked ? 'completed' : ''}" id="item-${uopId}">
+                  <input type="checkbox" class="custom-checkbox" id="${uopId}" ${uopChecked} onchange="toggleTask('${uopId}')">
+                  <span>${w.uop}</span>
+                </div>
+              </div>
+
+              <div class="track-col career" data-track="career">
+                <div class="track-col-header">
+                  <span class="track-col-label" style="color:var(--career-accent);">Track 3: Sim-to-Real</span>
+                  <span class="track-col-timing">Fri & Sun</span>
+                </div>
+                <div class="task-item ${careerChecked ? 'completed' : ''}" id="item-${careerId}">
+                  <input type="checkbox" class="custom-checkbox" id="${careerId}" ${careerChecked} onchange="toggleTask('${careerId}')">
+                  <span>${w.career}</span>
+                </div>
+              </div>
+            </div>
+          `;
+          weekGrid.appendChild(card);
+        });
+
+        monthSec.appendChild(weekGrid);
+        container.appendChild(monthSec);
+      });
+    }
+
+    function renderBom() {
+      const tbody = document.getElementById("bomTbody");
+      tbody.innerHTML = "";
+      BOM_DATA.forEach(item => {
+        const currentStatus = state.bomStatus[item.id] || "unbought";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${item.subsystem}</strong></td>
+          <td>${item.component}</td>
+          <td>${item.purpose}</td>
+          <td style="font-weight:600;">${item.estCost}</td>
+          <td>
+            <select class="status-select" onchange="setBomStatus('${item.id}', this.value)">
+              <option value="unbought" ${currentStatus==='unbought'?'selected':''}>⏳ Not Sourced</option>
+              <option value="ordered" ${currentStatus==='ordered'?'selected':''}>📦 Sourced / In Transit</option>
+              <option value="tested" ${currentStatus==='tested'?'selected':''}>⚡ Bench-Tested</option>
+              <option value="ready" ${currentStatus==='ready'?'selected':''}>✅ Mounted & Verified</option>
+            </select>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      updateBomMetrics();
+    }
+
+    function filterTrack(track, btnEl) {
+      document.querySelectorAll(".filter-chip").forEach(el => el.classList.remove("active"));
+      btnEl.classList.add("active");
+      const cols = document.querySelectorAll(".track-col");
+      cols.forEach(col => {
+        if (track === "all" || col.getAttribute("data-track") === track) col.style.display = "block";
+        else col.style.display = "none";
+      });
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+      const activeBtn = Array.from(document.querySelectorAll(".tab-btn")).find(b => b.getAttribute("onclick") && b.getAttribute("onclick").includes(tabId));
+      if (activeBtn) activeBtn.classList.add("active");
+      const targetTab = document.getElementById(tabId);
+      if (targetTab) targetTab.style.display = "block";
+    }
+
+    function switchTabMobile(tabId, btnEl) {
+      document.querySelectorAll(".mob-nav-item").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      switchTab(tabId);
+    }
+
+    function toggleTheme() {
+      const cur = document.body.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      document.body.setAttribute("data-theme", next);
+      state.theme = next;
+      saveState();
+    }
+
+    // Modal Handlers
+    function openDeepDiveModal(weekNum) {
+      let targetW = null;
+      SCHEDULE_DATA.forEach(m => {
+        const found = m.weeks.find(w => w.week === weekNum);
+        if (found) targetW = found;
+      });
+      if (!targetW) return;
+
+      document.getElementById("deepDiveTitle").innerText = `Week ${weekNum} Deep Dive: ${targetW.details.focus}`;
+      document.getElementById("deepDiveBody").innerHTML = `
+        <div style="background:var(--bg-tertiary); padding:10px 12px; border-radius:6px; margin-bottom:12px;">
+          <strong style="color:var(--futa-accent);">Track 1 DoD (FUTA):</strong> ${targetW.details.futaDoD}<br>
+          <strong style="color:var(--career-accent); margin-top:6px; display:inline-block;">Track 3 DoD (Sim/Outreach):</strong> ${targetW.details.careerDoD}
+        </div>
+        <div style="margin-bottom:10px;">
+          <strong style="color:#ef4444;">⚠️ Critical Gotcha / Trap to Avoid:</strong><br>
+          ${targetW.details.gotchas}
+        </div>
+        <div>
+          <strong style="color:#60a5fa;">💻 Terminal / Execution Snippet:</strong>
+          <pre style="background:var(--bg-primary); padding:8px 10px; border-radius:4px; font-size:11px; margin-top:4px; border:1px solid var(--border-color); overflow-x:auto;">${targetW.details.commands}</pre>
+        </div>
+      `;
+      document.getElementById("deepDiveModal").classList.add("show");
+    }
+
+    function closeDeepDiveModal() {
+      document.getElementById("deepDiveModal").classList.remove("show");
+    }
+
+    function openSyncModal() {
+      document.getElementById("syncModal").classList.add("show");
+    }
+    function closeSyncModal() {
+      document.getElementById("syncModal").classList.remove("show");
+    }
+
+    function generateSyncCode() {
+      const code = btoa(JSON.stringify(state));
+      document.getElementById("syncCodeBox").value = code;
+      showToast("Sync code generated!");
+    }
+    function copySyncCode() {
+      const val = document.getElementById("syncCodeBox").value;
+      if (!val) return;
+      navigator.clipboard.writeText(val).then(() => showToast("Sync code copied!"));
+    }
+    function applySyncCode() {
+      const val = document.getElementById("syncCodeBox").value.trim();
+      if (!val) return;
+      try {
+        const parsed = JSON.parse(atob(val));
+        if (parsed.tasks) {
+          state = parsed;
+          saveState();
+          renderSchedule();
+          renderBom();
+          updateMetrics();
+          closeSyncModal();
+          showToast("Synchronized successfully!");
+        }
+      } catch (e) {
+        alert("Invalid sync code format.");
+      }
+    }
+
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `charles_cockpit_backup_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Backup exported!");
+    }
+
+    function importData(evt) {
+      const file = evt.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.tasks) {
+            state = imported;
+            saveState();
+            renderSchedule();
+            renderBom();
+            updateMetrics();
+            closeSyncModal();
+            showToast("State restored successfully!");
+          }
+        } catch (err) {
+          alert("Invalid JSON file.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Manuals Reader Data
+    const MANUALS_DATA = {
+      'm-track1': `
+        <h2>Track 1: FUTA Drone Hardware & Thesis Guide</h2>
+        <p><strong>Strategy:</strong> Budget ~$147–$185 USD. Saturday workshop days only. Complete and defend an A-grade quadcopter without letting it consume cognitive bandwidth.</p>
+        <h3>1. Quad-X Motor Mapping</h3>
+        <p>Motor 1 (Front Right): CCW • Motor 2 (Rear Left): CCW • Motor 3 (Front Left): CW • Motor 4 (Rear Right): CW</p>
+        <h3>2. Pixhawk 2.4.8 Sensor Calibration</h3>
+        <p>Calibrate accelerometer, compass, radio, and ESCs via Mission Planner. Mount the GPS mast at least 10cm above the power distribution board.</p>
+        <h3>3. FUTA Thesis 5-Chapter Structure</h3>
+        <ul>
+          <li><strong>Ch 1:</strong> Introduction, Problem Statement, Objectives, Scope.</li>
+          <li><strong>Ch 2:</strong> Literature Review, Quadcopter Dynamics, EKF Sensor Fusion.</li>
+          <li><strong>Ch 3:</strong> Methodology, Sizing, Electrical Wiring & Power Budget.</li>
+          <li><strong>Ch 4:</strong> Field Testing, Telemetry Logs, Loiter & Failsafe RTL.</li>
+          <li><strong>Ch 5:</strong> Conclusion, Economic Feasibility, Recommendations.</li>
+        </ul>
+      `,
+      'm-track2': `
+        <h2>Track 2: UoPeople B.S. CS Survival & High-GPA Guide</h2>
+        <p><strong>Goal:</strong> Maintain 3.8+ GPA with strictly Mon–Thu (2 hours/day) study time.</p>
+        <h3>1. Discussion Forum 10/10 Formula</h3>
+        <p>Post early by Tuesday. Include 2 academic citations in APA 7th format. Respond to 3 peers using the <em>Praise-Question-Extend</em> formula.</p>
+        <h3>2. Programming Assignment Submission</h3>
+        <p>Adhere strictly to PEP 8 standards. Include full test suites (normal, edge, empty inputs) with terminal output screenshots compiled into a single clean PDF.</p>
+        <h3>3. Grade Appeal Protocol</h3>
+        <p>If a peer gives an arbitrary low score, message the instructor directly with evidence of meeting all rubric requirements. Instructors routinely override unfair grades.</p>
+      `,
+      'm-track3': `
+        <h2>Track 3: OpenUSD & Isaac Lab Sim-to-Real Field Manual</h2>
+        <p><strong>Goal:</strong> The offensive research weapon for ETH Zurich, TU Delft, and NTNU admissions.</p>
+        <h3>1. OpenUSD LIVPS Arcs</h3>
+        <p>Local > Inherits > VariantSets > Payloads > Specializes > References. Author mass and inertia tensors via <code>pxr.UsdPhysics.MassAPI</code>.</p>
+        <h3>2. cad2usd & V-HACD Decomposition</h3>
+        <p>Generate exact 3x3 inertia tensors using <code>trimesh</code> and decompose complex meshes into up to 16 convex hulls with <code>pyvhacd</code> to eliminate physics penetration.</p>
+        <h3>3. Headless GPU Reinforcement Learning</h3>
+        <p>Train across 4,096 parallel environments using RSL-RL or SKRL. Apply domain randomization over joint damping, mass, and surface friction via <code>EventManager</code>. Export actor checkpoint to <code>.onnx</code> for sub-millisecond edge latency.</p>
+      `,
+      'm-faculty': `
+        <h2>Faculty Outreach & Sniper Academic Strategy</h2>
+        <p><strong>Core Rule:</strong> Proof-of-work precedes conversation. Professors ignore cold emails without code or video.</p>
+        <h3>1. Stage 1 (Week 16): Postdoc Technical Inquiry</h3>
+        <p>Target senior postdocs and PhD leads (Dr. Vaishakh Patil, Mayank Mittal, Giovanni Franzese). Ask precise technical questions about solver contact dynamics and share your WandB curves.</p>
+        <h3>2. Stage 2 (Week 20): Lead PI Sponsorship Pitch</h3>
+        <p>Target Prof. Marco Hutter, Prof. Jens Kober, Prof. Kostas Alexis. Send a short email (< 170 words) with your unlisted 45s demo video, dual-degree background, and clean GitHub repository.</p>
+        <h3>3. 7-Day Follow-Up Protocol</h3>
+        <p>If no response after 7 business days, send a polite 2-line update adding a new benchmark data point (e.g., ONNX latency down to 0.82ms).</p>
+      `
+    };
+
+    function showManual(key, btnEl) {
+      document.querySelectorAll(".manual-nav-btn").forEach(b => b.classList.remove("active"));
+      btnEl.classList.add("active");
+      document.getElementById("manualViewerContent").innerHTML = MANUALS_DATA[key];
+    }
+
+    // Dynamic Outreach Templates
+    const LAB_DATA = {
+      rsl: {
+        lab: "Robotic Systems Lab (RSL)",
+        prof: "Prof. Marco Hutter",
+        postdoc: "Dr. Vaishakh Patil / Mayank Mittal",
+        emailPI: "mahutter@ethz.ch",
+        emailPostdoc: "vpatil@ethz.ch",
+        program: "Master in Robotics, Systems and Control at ETH Zurich",
+        focus: "dynamic legged locomotion and contact-rich Sim-to-Real reinforcement learning",
+        hook: "high-frequency jitter when joint damping was perturbed beyond 15% in parallel PhysX solver instances"
+      },
+      asl: {
+        lab: "Autonomous Systems Lab (ASL)",
+        prof: "Prof. Roland Siegwart",
+        postdoc: "Dr. Andrei Cramariuc / Dr. Hendrik Kolvenbach",
+        emailPI: "rsiegwart@ethz.ch",
+        emailPostdoc: "acramariuc@ethz.ch",
+        program: "Master in Robotics, Systems and Control at ETH Zurich",
+        focus: "autonomous state estimation, visual-inertial odometry, and subterranean perception",
+        hook: "latency discrepancies between GPU-accelerated raycasted LiDAR tensors and classical CPU point-cloud pipelines"
+      },
+      cor: {
+        lab: "Cognitive Robotics (CoR)",
+        prof: "Prof. Jens Kober",
+        postdoc: "Giovanni Franzese / Dr. Laura Ferranti",
+        emailPI: "j.kober@tudelft.nl",
+        emailPostdoc: "g.franzese@tudelft.nl",
+        program: "MSc Robotics at TU Delft",
+        focus: "interactive reinforcement learning, compliant manipulation, and policy generalization",
+        hook: "mesh penetration artifacts on non-convex links prior to automated V-HACD decomposition in Isaac Lab"
+      },
+      ntnu: {
+        lab: "Dept. of Engineering Cybernetics",
+        prof: "Prof. Kristin Y. Pettersen / Prof. Kostas Alexis",
+        postdoc: "Senior Research Fellow",
+        emailPI: "kristin.y.pettersen@ntnu.no",
+        emailPostdoc: "kostas.alexis@ntnu.no",
+        program: "MSc in Engineering Cybernetics at NTNU",
+        focus: "nonlinear robotic control, snake robotics, and subterranean autonomous navigation",
+        hook: "mathematical consistency of programmatic 3x3 inertia tensors during rapid multi-body link parameter sweeps"
+      }
+    };
+
+    function loadEmailDraft(labKey) {
+      switchTab('tab-faculty');
+      document.getElementById("emailTargetLab").value = labKey;
+      updateEmailDraft();
+      document.getElementById("emailStudioSection").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function updateEmailDraft() {
+      const stage = document.getElementById("emailStage").value;
+      const labKey = document.getElementById("emailTargetLab").value;
+      const repoUrl = document.getElementById("emailRepoUrl").value || "[Link to GitHub Repo]";
+      const videoUrl = document.getElementById("emailVideoUrl").value || "[Link to 45s Video]";
+      const lab = LAB_DATA[labKey];
+
+      let draft = "";
+      if (stage === "stage1") {
+        draft = `Subject: Technical Question regarding ${lab.lab} benchmarks & Isaac Lab contact dynamics\n\nDear ${lab.postdoc},\n\nI have been studying your group's recent publications on ${lab.focus}.\n\nWhile deploying a parallel Isaac Lab reinforcement learning environment across 4,096 instances with domain randomization, I evaluated policy convergence under unmodeled friction and inertia variations. I observed ${lab.hook}.\n\nI documented our automated OpenUSD mass-tensor ingestion pipeline and training telemetry here:\n• Weights & Biases / GitHub Repository: ${repoUrl}\n\nDid your team encounter similar sensitivity when scaling PhysX solver iterations on GPU, or did you apply an implicit actuator model to stabilize the reward curve?\n\nI would really value your perspective on this.\n\nSincerely,\n\nCharles Oluwatuase\nB.Eng Mechatronics Candidate (FUTA) | B.S. Computer Science (UoPeople)\nLinkedIn: linkedin.com/in/charles-oluwatuase`;
+      } else {
+        draft = `Subject: Prospective MSc Researcher: OpenUSD & Isaac Lab Sim-to-Real Pipeline | ${lab.lab}\n\nDear ${lab.prof},\n\nI have been following ${lab.lab}’s pioneering research on ${lab.focus}.\n\nI am completing my Mechatronics Engineering degree at FUTA alongside a B.S. in Computer Science at University of the People. Over the past six months, I developed a production-grade Sim-to-Real pipeline that automates the translation of raw CAD assemblies into Isaac Lab environments using OpenUSD mass-inertia ingestion and V-HACD convex decomposition.\n\nUsing this framework, I trained parallel PPO policies across 4,096 environments with domain randomization over joint damping, payload variations, and contact friction, successfully exporting the policy to ONNX for embedded deployment:\n• 45-Second End-to-End Pipeline Demo: ${videoUrl}\n• Open-Source Ingestion & Training Repository: ${repoUrl}\n\nI am applying to the ${lab.program} for the upcoming intake. I would value the chance to contribute to ${lab.lab}’s ongoing investigations.\n\nWould you or a member of your research team have 10 minutes to discuss how my simulation and hardware experience aligns with your current research direction?\n\nMy CV, dual-degree transcripts, and technical project documentation are attached for your review.\n\nSincerely,\n\nCharles Oluwatuase\nB.Eng Mechatronics (FUTA) | B.S. Computer Science (UoPeople)\nLinkedIn: linkedin.com/in/charles-oluwatuase\nGitHub: github.com/charles-oluwatuase`;
+      }
+      document.getElementById("emailOutputBox").innerText = draft;
+    }
+
+    function copyEmailText() {
+      const text = document.getElementById("emailOutputBox").innerText;
+      navigator.clipboard.writeText(text).then(() => showToast("Email draft copied!"));
+    }
+
+    function openMailClient() {
+      const stage = document.getElementById("emailStage").value;
+      const labKey = document.getElementById("emailTargetLab").value;
+      const lab = LAB_DATA[labKey];
+      const recipient = stage === "stage1" ? lab.emailPostdoc : lab.emailPI;
+      const subject = stage === "stage1" 
+        ? `Technical Question regarding ${lab.lab} benchmarks` 
+        : `Prospective MSc Researcher: OpenUSD & Isaac Lab Sim-to-Real Pipeline | ${lab.lab}`;
+      const body = encodeURIComponent(document.getElementById("emailOutputBox").innerText);
+      window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${body}`;
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.innerText = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2500);
+    }
+
+    // App Initialization
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      renderSchedule();
+      renderBom();
+      updateMetrics();
+      updateEmailDraft();
+      showManual('m-track1', document.querySelector(".manual-nav-btn"));
+    });
+  </script>
+</body>
+</html>
